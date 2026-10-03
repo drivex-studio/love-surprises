@@ -35,11 +35,17 @@ $("body").textContent = CONFIG.letter;
 $("from").textContent = CONFIG.from;
 
 function dodge() {
+  if (no.parentElement.id === "btns") {
+    $("ask").appendChild(no);
+  }
   no.classList.add("run");
-  const maxX = card.clientWidth - no.offsetWidth - 24;
-  const maxY = card.clientHeight - no.offsetHeight - 24;
-  no.style.left = Math.max(24, Math.random() * maxX) + "px";
-  no.style.top = Math.max(24, Math.random() * maxY) + "px";
+  
+  const safePadding = 20;
+  const maxX = card.clientWidth - no.offsetWidth - (safePadding * 2);
+  const maxY = card.clientHeight - no.offsetHeight - (safePadding * 2);
+  
+  no.style.left = (safePadding + Math.random() * maxX) + "px";
+  no.style.top = (safePadding + Math.random() * maxY) + "px";
 }
 
 function refuse(e) {
