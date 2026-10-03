@@ -1,0 +1,237 @@
+:root {
+  --bg1: #ffcf33;
+  --bg2: #ff6f91;
+  --card: #fff;
+  --ink: #4a2f3a;
+  --yes: #ff4d6d;
+  --no: #4d6bff;
+  box-sizing: border-box;
+}
+
+:root[data-theme="dark"] {
+  --card: #fff7fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Noto Sans Myanmar', system-ui, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(160deg, var(--bg1), var(--bg2), #ff9a76, var(--bg1));
+  background-size: 300% 300%;
+  animation: flow 18s ease-in-out infinite;
+  display: grid;
+  place-items: center;
+  padding: env(safe-area-inset-top, 0) 16px env(safe-area-inset-bottom, 0);
+  overflow: hidden;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 28px;
+  padding: 32px 22px;
+  width: min(92vw, 380px);
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(120, 20, 60, 0.25);
+  position: relative;
+  z-index: 1;
+}
+
+.bears {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 16px;
+  border-radius: 24px;
+  background: #fff4f6;
+  display: grid;
+  place-items: center;
+  transition: transform 0.3s;
+}
+
+.bears.hug {
+  transform: scale(1.12) rotate(-3deg);
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 1.8;
+  font-weight: 600;
+  margin: 10px 0 24px;
+}
+
+.btns {
+  position: relative;
+  min-height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: font-size 0.25s, padding 0.25s, transform 0.25s;
+  touch-action: manipulation;
+  position: relative;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+#yes {
+  background: var(--yes);
+  box-shadow: 0 6px 14px rgba(255, 77, 109, 0.45);
+  z-index: 2;
+}
+
+#no {
+  background: var(--no);
+  box-shadow: 0 6px 14px rgba(77, 107, 255, 0.4);
+}
+
+#no.run {
+  position: absolute;
+  z-index: 9999;
+  transition: left 0.3s ease-out, top 0.3s ease-out, font-size 0.25s, padding 0.25s;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 140%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--ink);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, bottom 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--ink) transparent transparent transparent;
+}
+
+.tooltip.show {
+  opacity: 1;
+  bottom: 125%;
+}
+
+.letter {
+  display: none;
+  text-align: left;
+}
+
+.letter h2 {
+  font-size: 18px;
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+.letter .paper {
+  background: #fffdf6;
+  border: 1px solid #f3dfc7;
+  border-radius: 14px;
+  padding: 20px;
+  font-size: 15px;
+  line-height: 2;
+  white-space: pre-line;
+  animation: open 0.6s ease;
+}
+
+.letter .sign {
+  text-align: right;
+  margin-top: 16px;
+  font-weight: 600;
+}
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  font-size: 24px;
+  animation: up 3.2s linear forwards;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg span {
+  position: absolute;
+  bottom: -40px;
+  opacity: 0.22;
+  animation: drift linear infinite;
+}
+
+@keyframes open {
+  from {
+    transform: scale(0.8) rotate(-2deg);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes up {
+  to {
+    transform: translateY(-110vh) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flow {
+  0%, 100% { background-position: 0% 20%; }
+  50% { background-position: 100% 80%; }
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) rotate(0); }
+  50% { transform: translate(18px, -55vh) rotate(12deg); }
+  100% { transform: translate(-12px, -115vh) rotate(-10deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+  .bg, .heart { display: none; }
+  .bears, button { transition: none; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --card: #fff7fa;
+  }
+}
